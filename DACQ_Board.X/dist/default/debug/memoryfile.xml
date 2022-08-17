@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+  <executable name="dist/default/debug/DACQ_Board.X.debug.elf">
+    <memory name="data">
+      <units>bytes</units>
+      <length>8192</length>
+      <used>488</used>
+      <free>7704</free>
+    </memory>
+    <memory name="program">
+      <units>bytes</units>
+      <length>66816</length>
+      <used>11883</used>
+      <free>54933</free>
+    </memory>
+  </executable>
+</project>

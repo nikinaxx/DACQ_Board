@@ -57,7 +57,7 @@ int main(void)
 
     while (1)
     {
-        // Add your application code
+        MCC_USB_CDC_DemoTasks();
     }
 
     return 1;

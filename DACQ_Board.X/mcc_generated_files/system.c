@@ -59,14 +59,14 @@
 
 // FOSCSEL
 #pragma config FNOSC = FRC    //Oscillator Source Selection->FRC
-#pragma config PLLMODE = PLL96DIV2    //PLL Mode Selection->96 MHz PLL. Oscillator input is divided by 2 (8 MHz input)
+#pragma config PLLMODE = PLL96DIV4    //PLL Mode Selection->96 MHz PLL. Oscillator input is divided by 4 (16 MHz input)
 #pragma config IESO = OFF    //Two-speed Oscillator Start-up Enable bit->Start up with user-selected oscillator source
 
 // FOSC
-#pragma config POSCMD = NONE    //Primary Oscillator Mode Select bits->Primary Oscillator disabled
+#pragma config POSCMD = HS    //Primary Oscillator Mode Select bits->HS Crystal Oscillator Mode
 #pragma config OSCIOFCN = ON    //OSC2 Pin Function bit->OSC2 is general purpose digital I/O pin
 #pragma config SOSCSEL = OFF    //SOSC Selection Configuration bits->Digital (SCLKI) mode
-#pragma config PLLSS = PLL_FRC    //PLL Secondary Selection Configuration bit->PLL is fed by the on-chip Fast RC (FRC) oscillator
+#pragma config PLLSS = PLL_PRI    //PLL Secondary Selection Configuration bit->PLL is fed by the Primary oscillator
 #pragma config IOL1WAY = ON    //Peripheral pin select configuration bit->Allow only one reconfiguration
 #pragma config FCKSM = CSECMD    //Clock Switching Mode bits->Clock switching is enabled,Fail-safe Clock Monitor is disabled
 
@@ -81,11 +81,9 @@
 
 // FPOR
 #pragma config BOREN = ON    //Brown Out Enable bit->Brown Out Enable Bit
-#pragma config LPREGEN = OFF    //Low power regulator control->No Retention Sleep
-#pragma config LPBOREN = ENABLE    //Downside Voltage Protection Enable bit->Downside protection enabled using ZPBOR when BOR is inactive
 
 // FICD
-#pragma config ICS = PGD1    //ICD Communication Channel Select bits->Communicate on PGEC1 and PGED1
+#pragma config ICS = PGD2    //ICD Communication Channel Select bits->Communicate on PGEC2 and PGED2
 #pragma config JTAGEN = OFF    //JTAG Enable bit->JTAG is disabled
 
 // FDMTIVTL
@@ -114,14 +112,21 @@
 #include "pin_manager.h"
 #include "clock.h"
 #include "system.h"
+#include "usb/usb.h"
+#include "adc1.h"
 #include "interrupt_manager.h"
 #include "traps.h"
+#include "spi1.h"
 
 void SYSTEM_Initialize(void)
 {
     PIN_MANAGER_Initialize();
     INTERRUPT_Initialize();
     CLOCK_Initialize();
+    USBDeviceInit();
+    USBDeviceAttach();
+    SPI1_Initialize();
+    ADC1_Initialize();
 }
 
 /**
